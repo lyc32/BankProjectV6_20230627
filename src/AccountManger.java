@@ -67,18 +67,18 @@ public class AccountManger extends Account implements UserOperation
     @Override
     public void deleteUser(String id, DataBase dataBase)
     {
-        boolean deleteSuccessful = false;
+        Account deleteAccount = null;
         for(int i = 0; i < dataBase.perAccountList.size(); i++)
         {
             if(dataBase.perAccountList.get(i).getUserId().equals(id))
             {
-                dataBase.perAccountList.get(i).delete();
-                deleteSuccessful = true;
+                deleteAccount = dataBase.perAccountList.get(i);
                 break;
             }
         }
-        if(deleteSuccessful == true)
+        if(deleteAccount != null)
         {
+            deleteAccount.delete();
             System.out.println("success delete User: " + id);
         }
         else
