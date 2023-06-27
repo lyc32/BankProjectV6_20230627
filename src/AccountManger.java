@@ -40,9 +40,21 @@ public class AccountManger extends Account implements UserOperation
         phoneNumber.create(scanner);
         System.out.println("Please input Address");
         address.create(scanner);
-
         System.out.println("Please input User balance:");
-        Double balance = scanner.nextDouble();
+        Double balance = 0.0;
+        for(;true;)
+        {
+            try
+            {
+                balance= scanner.nextDouble();
+                break;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("please input a Number:");
+                scanner.next();
+            }
+        }
 
         AccountCustomerPersonal newUser = new AccountCustomerPersonal(id, password, name, balance);
         newUser.setPhoneNumber(phoneNumber);
@@ -78,22 +90,9 @@ public class AccountManger extends Account implements UserOperation
     @Override
     public void editUser(String id, DataBase dataBase, Scanner scanner)
     {
-        Account targetAccount = null;
-        for(int i = 0; i < dataBase.perAccountList.size(); i++)
+        Account targetAccount = searchUser(id,dataBase);
+        if(targetAccount != null)
         {
-            if(dataBase.perAccountList.get(i).getUserId().equals(id))
-            {
-                targetAccount = dataBase.perAccountList.get(i);
-                break;
-            }
-        }
-        if(targetAccount == null)
-        {
-            System.out.println("can not find user: " + id);
-        }
-        else
-        {
-            targetAccount.print();
             System.out.println("Please select the which one you want to edit?\n 1.Address\n 2.phone Number\n 3.Email ID");
             int choose = -1;
             for(;true;)
@@ -141,22 +140,18 @@ public class AccountManger extends Account implements UserOperation
         }
     }
 
-    public void searchUser(String id, DataBase dataBase)
+    public Account searchUser(String id, DataBase dataBase)
     {
-        boolean findUser = false;
         for(int i = 0; i < dataBase.perAccountList.size(); i++)
         {
             if(dataBase.perAccountList.get(i).getUserId().equals(id))
             {
                 dataBase.perAccountList.get(i).print();
-                findUser = true;
-                break;
+                return dataBase.perAccountList.get(i);
             }
         }
-        if(findUser == false)
-        {
-            System.out.println("can not find user: " + id);
-        }
+        System.out.println("can not find user: " + id);
+        return null;
     }
 
     @Override

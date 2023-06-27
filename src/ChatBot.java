@@ -19,11 +19,11 @@ public class ChatBot
                 {
                     for(;true;)
                     {
-                        System.out.println("Please select your Account Type:\n 1 for personal\n 2.for business\n 3.for Manager");
+                        System.out.println("Please select your Account Type:\n 1 for personal\n 2.for business\n 3.for Manager \n 4.Exit");
                         try
                         {
                             type = scanner.nextInt();
-                            if(type == 1 || type == 2 || type == 3)
+                            if(type == 1 || type == 2 || type == 3 || type == 4)
                             {
                                 break;
                             }
@@ -38,6 +38,10 @@ public class ChatBot
                             scanner.next();
                         }
                     }
+                    if(type == 4)
+                    {
+                        System.exit(0);
+                    }
                     // login
                     System.out.println("Please enter your Account Id:");
                     String id = scanner.next();
@@ -47,18 +51,19 @@ public class ChatBot
                     if(type == 1)
                     {
                         tmpAccount = new AccountCustomerPersonal(id,password);
-                        tmpAccount = tmpAccount.login(DataBase.perAccountList);
+                        tmpAccount = tmpAccount.login(dataBase.perAccountList);
                     }
                     else if(type == 2)
                     {
                         tmpAccount = new AccountCustomerBusiness(id,password);
-                        tmpAccount = tmpAccount.login(DataBase.busAccountList);
+                        tmpAccount = tmpAccount.login(dataBase.busAccountList);
                     }
                     else
                     {
                         tmpAccount = new AccountManger(id,password);
-                        tmpAccount = tmpAccount.login(DataBase.magAccountList);
+                        tmpAccount = tmpAccount.login(dataBase.magAccountList);
                     }
+
 
                     if(tmpAccount == null)
                     {
@@ -105,11 +110,11 @@ public class ChatBot
                     int choose;
                     for(;true;)
                     {
-                        System.out.println("What you want to do?\n 1.add new user\n 2.delete user\n 3.search user\n 4.edit user\n 5.list all users");
+                        System.out.println("What you want to do?\n 1.add new user\n 2.delete user\n 3.search user\n 4.edit user\n 5.list all users\n 6.Exit");
                         try
                         {
                             choose= scanner.nextInt();
-                            if(choose == 1 || choose == 2 || choose == 3 || choose == 4 || choose == 5)
+                            if(choose == 1 || choose == 2 || choose == 3 || choose == 4 || choose == 5 || choose == 6)
                             {
                                 break;
                             }
@@ -145,11 +150,16 @@ public class ChatBot
                     {
                         ((AccountManger) tmpAccount).listUsers(dataBase);
                     }
-                    else
+                    else if(choose == 2)
                     {
                         System.out.println("please input User ID:");
                         String deleteId = scanner.next();
                         ((AccountManger) tmpAccount).deleteUser(deleteId,dataBase);
+                    }
+                    else
+                    {
+                        tmpAccount = null;
+                        break;
                     }
                     break;
                 }

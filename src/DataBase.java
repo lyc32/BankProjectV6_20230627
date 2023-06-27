@@ -3,9 +3,9 @@ import java.util.List;
 
 public class DataBase
 {
-    public static List<Account> perAccountList = new ArrayList<>();
-    public static List<Account> busAccountList = new ArrayList<>();
-    public static List<Account> magAccountList = new ArrayList<>();
+    public List<Account> perAccountList = new ArrayList<>();
+    public List<Account> busAccountList = new ArrayList<>();
+    public List<Account> magAccountList = new ArrayList<>();
 
     DataBase()
     {
